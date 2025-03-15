@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Page,
   Layout,
@@ -15,6 +16,11 @@ import {
 } from "@shopify/polaris";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
+import BackgroundImage from "../components/BackgroundImage";
+
+export const links: LinksFunction = () => {
+  return [];
+};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   await authenticate.admin(request);
@@ -108,11 +114,16 @@ export default function Index() {
       shopify.toast.show("Product created");
     }
   }, [productId, shopify]);
+
   const generateProduct = () => fetcher.submit({}, { method: "POST" });
 
   return (
     <Page>
-      <TitleBar title="Remix app template">
+        <BackgroundImage 
+          src="https://d3p7e4b35qbbpe.cloudfront.net/images/bg.png"
+          alt="Background Image"
+        />
+      <TitleBar title="Remix app template" >
         <button variant="primary" onClick={generateProduct}>
           Generate a product
         </button>
@@ -313,7 +324,7 @@ export default function Index() {
                       to get started
                     </List.Item>
                     <List.Item>
-                      Explore Shopify’s API with{" "}
+                      Explore Shopify's API with{" "}
                       <Link
                         url="https://shopify.dev/docs/apps/tools/graphiql-admin-api"
                         target="_blank"

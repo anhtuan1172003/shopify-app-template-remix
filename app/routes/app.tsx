@@ -6,6 +6,8 @@ import { NavMenu } from "@shopify/app-bridge-react";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
 
 import { authenticate } from "../shopify.server";
+import { useEffect } from "react";
+import reportWebVitals from "./reportWebVitals";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
@@ -17,6 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function App() {
   const { apiKey } = useLoaderData<typeof loader>();
+  useEffect(()=>(reportWebVitals(console.log)),[])
 
   return (
     <AppProvider isEmbeddedApp apiKey={apiKey}>
